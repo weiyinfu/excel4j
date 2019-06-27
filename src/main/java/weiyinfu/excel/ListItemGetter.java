@@ -1,8 +1,8 @@
-package excel;
+package weiyinfu.excel;
 
-import utils.bean.BeanGetterAndSetter;
-import utils.bean.GetterAndSetter;
-import utils.bean.MapGetterAndSetter;
+import weiyinfu.util.bean.BeanGs;
+import weiyinfu.util.bean.GetterAndSetter;
+import weiyinfu.util.bean.MapGs;
 
 import java.util.List;
 import java.util.Map;
@@ -12,12 +12,9 @@ List<?> data;
 int index;
 GetterAndSetter gs;
 
-public ListItemGetter() {
-
-}
-
 public ListItemGetter(List<?> data) {
-    init(data);
+    this.data = data;
+    index = -1;
 }
 
 @Override
@@ -26,18 +23,17 @@ public boolean next() {
     if (index >= data.size()) {
         return false;
     } else {
-        gs.init(data.get(index));
+        Object obj = data.get(index);
+        if (obj.getClass() == Map.class) {
+            Map<String, Object> ma = (Map<String, Object>) obj;
+            this.gs = new MapGs(ma, true);
+        } else {
+            this.gs = new BeanGs(obj, true);
+        }
         return true;
     }
 }
 
-
-@Override
-public void init(Object obj) {
-    this.data = (List<?>) obj;
-    this.gs = data.get(0).getClass() == Map.class ? new MapGetterAndSetter() : new BeanGetterAndSetter();
-    index = -1;
-}
 
 @Override
 public Object get(String attr) {

@@ -1,8 +1,14 @@
-package utils;
-
 public class User {
 String name;
 int age;
+
+public User() {
+}
+
+public User(String name, int age) {
+    this.name = name;
+    this.age = age;
+}
 
 public String getName() {
     return name;
@@ -18,5 +24,10 @@ public int getAge() {
 
 public void setAge(int age) {
     this.age = age;
+}
+
+@Override
+public String toString() {
+    return String.format("User(name=%s,age=%s)", name, age);
 }
 }

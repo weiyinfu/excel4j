@@ -1,12 +1,12 @@
-package excel;
+package weiyinfu.excel;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import utils.bean.BeanGetterAndSetter;
-import utils.bean.GetterAndSetter;
-import utils.bean.Gs;
-import utils.bean.MapGetterAndSetter;
+import weiyinfu.util.bean.BeanGs;
+import weiyinfu.util.bean.GetterAndSetter;
+import weiyinfu.util.bean.Gs;
+import weiyinfu.util.bean.MapGs;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class ExcelUtil {
 
 //设置excel单元格的样式
-static HSSFCellStyle exportStyle(HSSFWorkbook workbook) {
+private static HSSFCellStyle exportStyle(HSSFWorkbook workbook) {
     HSSFCellStyle cellStyle = workbook.createCellStyle();
     cellStyle.setAlignment(HorizontalAlignment.LEFT);
     cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -38,7 +38,7 @@ public static HSSFWorkbook exportBigExcel(String[] headers, String[] fields, Ite
     }
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet sheet = workbook.createSheet("第一个sheet");
-    int columnWidth[] = new int[headers.length];
+    int[] columnWidth = new int[headers.length];
 
     HSSFRow row = sheet.createRow(0);
 
@@ -72,7 +72,7 @@ public static HSSFWorkbook exportBigExcel(String[] headers, String[] fields, Ite
  * @param fields  成员变量名称
  * @param data    对象列表，对象可以是JavaBean也可以是Map
  */
-public static HSSFWorkbook exportExcel(String[] headers, String[] fields, List<?> data) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException {
+public static HSSFWorkbook exportExcel(String[] headers, String[] fields, List<?> data) throws IOException {
     ListItemGetter getter = new ListItemGetter(data);
     return exportBigExcel(headers, fields, getter);
 }
@@ -103,11 +103,12 @@ public static <T> List<T> importExcel(InputStream cin, String[] headers, String[
 /**
  * 导入比较大的Excel文件，不需要全部读入
  */
-public static <T> void importBigExcel(InputStream cin, String[] headers, String[] fields, Class<T> cls, ItemHandler<T> handler) throws IOException, InvalidFormatException, NoSuchFieldException, IllegalAccessException, InstantiationException {
+public static <T> void importBigExcel(InputStream cin, String[] headers, String[] fields, Class<T> cls, ItemHandler<T> handler) throws IOException, InvalidFormatException, NoSuchFieldException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
     if (headers.length != fields.length) {
         throw new RuntimeException("headers的长度不等于fields的长度");
     }
-    GetterAndSetter getterAndSetter = cls.isAssignableFrom(Map.class) ? new MapGetterAndSetter() : new BeanGetterAndSetter();
+
+
     Workbook workbook = WorkbookFactory.create(cin);
     Sheet sheet = workbook.getSheetAt(0);
     int col[] = new int[fields.length];
@@ -133,8 +134,8 @@ public static <T> void importBigExcel(InputStream cin, String[] headers, String[
     int rownum = 1;
     while (rownum <= sheet.getLastRowNum()) {
         row = sheet.getRow(rownum);
-        T obj = cls.newInstance();
-        getterAndSetter.init(obj);
+        T obj = cls.getDeclaredConstructor().newInstance();
+        GetterAndSetter getterAndSetter = cls.isAssignableFrom(Map.class) ? new MapGs((Map<String, Object>) obj, true) : new BeanGs(obj, true);
         for (int i = 0; i < fields.length; i++) {
             try {
                 Object val = null;

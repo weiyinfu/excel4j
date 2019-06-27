@@ -1,6 +1,6 @@
-package excel;
+package weiyinfu.excel;
 
-import utils.bean.GetterAndSetter;
+import weiyinfu.util.bean.GetterAndSetter;
 
 public interface ItemGetter extends GetterAndSetter {
 boolean next();
