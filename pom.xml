@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>weiyinfu</groupId>
-            <artifactId>util</artifactId>
+            <artifactId>gs</artifactId>
             <version>1.0-snapshot</version>
         </dependency>
         <dependency>

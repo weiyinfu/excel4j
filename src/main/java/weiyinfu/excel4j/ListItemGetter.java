@@ -1,8 +1,8 @@
-package weiyinfu.excel;
+package weiyinfu.excel4j;
 
-import weiyinfu.util.bean.BeanGs;
-import weiyinfu.util.bean.GetterAndSetter;
-import weiyinfu.util.bean.MapGs;
+import weiyinfu.gs.BeanGs;
+import weiyinfu.gs.GetterAndSetter;
+import weiyinfu.gs.MapGs;
 
 import java.util.List;
 import java.util.Map;

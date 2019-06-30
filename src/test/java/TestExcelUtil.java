@@ -1,8 +1,8 @@
 import com.alibaba.fastjson.JSON;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
-import weiyinfu.excel.ExcelUtil;
-import weiyinfu.util.bean.BeanGs;
+import weiyinfu.excel4j.ExcelUtil;
+import weiyinfu.gs.BeanGs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +13,39 @@ import java.util.List;
 
 public class TestExcelUtil {
 
+class User {
+    String name;
+    int age;
+
+    public User() {
+    }
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("User(name=%s,age=%s)", name, age);
+    }
+}
 
 //获取一个列表，用于调试
 List<User> getList() {

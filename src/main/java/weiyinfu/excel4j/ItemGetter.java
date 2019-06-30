@@ -1,6 +1,6 @@
-package weiyinfu.excel;
+package weiyinfu.excel4j;
 
-import weiyinfu.util.bean.GetterAndSetter;
+import weiyinfu.gs.GetterAndSetter;
 
 public interface ItemGetter extends GetterAndSetter {
 boolean next();
