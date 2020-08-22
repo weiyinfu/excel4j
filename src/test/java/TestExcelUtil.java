@@ -2,18 +2,19 @@ import com.alibaba.fastjson.JSON;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
 import weiyinfu.excel4j.ExcelUtil;
-import weiyinfu.gs.BeanGs;
+import cn.weiyinfu.gs.BeanGs;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestExcelUtil {
 
-class User {
+public static class User {
     String name;
     int age;
 
@@ -57,6 +58,18 @@ List<User> getList() {
         ans.add(haha);
     }
     return ans;
+}
+
+@Test
+public void testConstructor() throws NoSuchMethodException {
+    Constructor<?>[] cons = User.class.getConstructors();
+    Constructor<?>[] cons2 = User.class.getDeclaredConstructors();
+    System.out.println(cons.length);
+    System.out.println(cons2[0]);
+    System.out.println(cons2[1]);
+    System.out.println(cons2.length);
+    Constructor<User> res = User.class.getDeclaredConstructor();
+    System.out.println(res);
 }
 
 @Test

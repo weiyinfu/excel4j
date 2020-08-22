@@ -3,10 +3,10 @@ package weiyinfu.excel4j;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import weiyinfu.gs.BeanGs;
-import weiyinfu.gs.GetterAndSetter;
-import weiyinfu.gs.Gs;
-import weiyinfu.gs.MapGs;
+import cn.weiyinfu.gs.BeanGs;
+import cn.weiyinfu.gs.GetterAndSetter;
+import cn.weiyinfu.gs.Gs;
+import cn.weiyinfu.gs.MapGs;
 
 import java.io.IOException;
 import java.io.InputStream;
